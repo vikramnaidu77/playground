@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitara's Mythology World</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F4C430;
+    --deep-gold: #C8960C;
+    --norse-blue: #1A2744;
+    --greek-purple: #2D1B4E;
+    --sky: #4A90C4;
+    --parchment: #FDF6E3;
+    --ember: #E85D26;
+    --silver: #C0C8D8;
+    --text-light: #F0E8D0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', serif;
+    background: #0D1220;
+    color: var(--text-light);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Stars background */
+  .stars {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(1px 1px at 10% 15%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 8%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 55%, white 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 80% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 70%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 85%, white 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 60% 90%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 50%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 35%, white 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 88%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 20% 25%, white 0%, transparent 100%);
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 40px 20px 20px;
+    background: linear-gradient(180deg, rgba(13,18,32,0.9) 0%, transparent 100%);
+  }
+
+  .title-wrap {
+    display: inline-block;
+    position: relative;
+  }
+
+  h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold) 0%, #fff8dc 40%, var(--gold) 70%, var(--deep-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    letter-spacing: 2px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--silver);
+    margin-top: 6px;
+    letter-spacing: 3px;
+  }
+
+  .title-decoration {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; margin-top: 10px;
+  }
+  .title-decoration span { color: var(--gold); font-size: 1.4rem; }
+  .title-decoration .line {
+    width: 80px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ===== NAV TABS ===== */
+  .nav {
+    position: relative; z-index: 10;
+    display: flex; justify-content: center; gap: 8px;
+    padding: 20px; flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.75rem;
+    padding: 10px 20px;
+    border: 1px solid rgba(244,196,48,0.4);
+    border-radius: 30px;
+    background: rgba(244,196,48,0.07);
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--gold);
+    color: #0D1220;
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(244,196,48,0.4);
+    transform: translateY(-2px);
+  }
+
+  /* ===== MAIN ===== */
+  main {
+    position: relative; z-index: 10;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .section { display: none; animation: fadeIn 0.5s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .section-header h2 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .section-header p {
+    font-style: italic;
+    color: var(--silver);
+    font-size: 1.1rem;
+  }
+
+  /* ===== STORY CARDS ===== */
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .story-card {
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .story-card.norse {
+    background: linear-gradient(135deg, #1A2744 0%, #0f1a35 100%);
+    border-color: rgba(74,144,196,0.3);
+  }
+  .story-card.greek {
+    background: linear-gradient(135deg, #2D1B4E 0%, #1a0f2e 100%);
+    border-color: rgba(200,150,255,0.3);
+  }
+
+  .story-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+  .story-card.norse:hover { box-shadow: 0 20px 40px rgba(74,144,196,0.25); border-color: rgba(74,144,196,0.6); }
+  .story-card.greek:hover { box-shadow: 0 20px 40px rgba(200,150,255,0.25); border-color: rgba(200,150,255,0.5); }
+
+  .card-badge {
+    display: inline-block;
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.6rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  .norse .card-badge { background: rgba(74,144,196,0.25); color: #7eb8e8; border: 1px solid rgba(74,144,196,0.4); }
+  .greek .card-badge { background: rgba(200,150,255,0.2); color: #d4a0ff; border: 1px solid rgba(200,150,255,0.4); }
+
+  .story-card .emoji { font-size: 2.5rem; margin-bottom: 10px; display: block; }
+  .story-card h3 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .story-card p { font-size: 0.95rem; color: var(--silver); line-height: 1.5; font-style: italic; }
+
+  .read-btn {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 7px 16px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    color: var(--gold);
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .read-btn:hover { background: var(--gold); color: #0D1220; }
+
+  /* ===== STORY MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: linear-gradient(160deg, #1a1030 0%, #0d1528 100%);
+    border: 1px solid rgba(244,196,48,0.3);
+    border-radius: 20px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 36px;
+    position: relative;
+    box-shadow: 0 0 60px rgba(244,196,48,0.1);
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    background: none; border: none;
+    color: var(--silver); font-size: 1.8rem;
+    cursor: pointer; line-height: 1;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--gold); }
+
+  .modal h2 {
+    font-family: 'Cinzel Decorative', cursive;
+    color: var(--gold);
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
+  .modal .story-type {
+    font-style: italic; color: var(--silver);
+    font-size: 0.9rem; margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(244,196,48,0.2);
+  }
+  .modal .story-body {
+    font-size: 1.08rem;
+    line-height: 1.8;
+    color: var(--text-light);
+  }
+  .modal .story-body p { margin-bottom: 14px; }
+  .modal .story-body .highlight {
+    color: var(--gold);
+    font-weight: 600;
+    font-style: italic;
+  }
+  .modal .story-emoji { font-size: 3rem; text-align: center; margin-bottom: 16px; }
+
+  /* ===== QUIZ ===== */
+  .quiz-container {
+    background: linear-gradient(135deg, #151e35 0%, #1a0f2e 100%);
+    border: 1px solid rgba(244,196,48,0.2);
+    border-radius: 20px;
+    padding: 36px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .quiz-progress {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 24px;
+  }
+  .quiz-progress .q-num {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.75rem; color: var(--silver); letter-spacing: 2px;
+  }
+  .progress-bar {
+    flex: 1; height: 4px; background: rgba(255,255,255,0.1);
+    border-radius: 2px; margin: 0 16px;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--sky), var(--gold));
+    border-radius: 2px; transition: width 0.4s ease;
+  }
+  .score-display {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.75rem; color: var(--gold);
+  }
+
+  .quiz-question {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+    color: var(--text-light);
+    margin-bottom: 24px;
+    line-height: 1.5;
+    text-align: center;
+    min-height: 60px;
+  }
+
+  .quiz-emoji { text-align: center; font-size: 3rem; margin-bottom: 16px; }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .option-btn {
+    padding: 14px 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    color: var(--text-light);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    background: rgba(244,196,48,0.1);
+    transform: scale(1.02);
+  }
+  .option-btn.correct { background: rgba(46,160,67,0.3); border-color: #2ea043; color: #7ee787; }
+  .option-btn.wrong { background: rgba(232,93,38,0.25); border-color: var(--ember); color: #ff9a7a; }
+  .option-btn:disabled { cursor: default; }
+
+  .feedback-msg {
+    text-align: center; min-height: 40px;
+    font-size: 1.1rem; font-style: italic;
+    margin-bottom: 16px; color: var(--gold);
+  }
+
+  .quiz-nav { display: flex; justify-content: center; gap: 12px; }
+
+  .btn-primary {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, var(--gold), var(--deep-gold));
+    color: #0D1220;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(244,196,48,0.35); }
+  .btn-primary:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+  .btn-secondary {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(244,196,48,0.1); }
+
+  .quiz-result {
+    text-align: center; padding: 20px 0;
+  }
+  .quiz-result .result-emoji { font-size: 4rem; margin-bottom: 16px; }
+  .quiz-result h3 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.4rem; color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .quiz-result p { color: var(--silver); font-size: 1.1rem; font-style: italic; }
+  .quiz-result .final-score {
+    font-size: 3rem; font-family: 'Cinzel Decorative', cursive;
+    color: var(--gold); margin: 16px 0;
+  }
+
+  /* ===== EXPLORE ===== */
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .deity-card {
+    border-radius: 16px;
+    padding: 24px 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .deity-card.norse-card {
+    background: linear-gradient(160deg, #1A2744, #0f1520);
+    border-color: rgba(74,144,196,0.25);
+  }
+  .deity-card.greek-card {
+    background: linear-gradient(160deg, #2D1B4E, #160d28);
+    border-color: rgba(200,150,255,0.2);
+  }
+  .deity-card:hover {
+    transform: translateY(-5px);
+  }
+  .deity-card.norse-card:hover { box-shadow: 0 16px 32px rgba(74,144,196,0.2); border-color: rgba(74,144,196,0.5); }
+  .deity-card.greek-card:hover { box-shadow: 0 16px 32px rgba(200,150,255,0.2); border-color: rgba(200,150,255,0.4); }
+
+  .deity-emoji { font-size: 3rem; margin-bottom: 10px; display: block; }
+  .deity-card h3 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.85rem; color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .deity-card .domain {
+    font-size: 0.85rem; color: var(--silver);
+    font-style: italic; margin-bottom: 10px;
+  }
+  .deity-card .fun-fact {
+    display: none;
+    font-size: 0.9rem; color: var(--text-light);
+    line-height: 1.5; margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(244,196,48,0.2);
+    text-align: left;
+  }
+  .deity-card.expanded .fun-fact { display: block; animation: fadeIn 0.3s ease; }
+  .deity-card .tap-hint {
+    font-size: 0.7rem; color: rgba(255,255,255,0.3);
+    letter-spacing: 1px; font-family: 'Cinzel Decorative', cursive;
+  }
+
+  .explore-section-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1rem;
+    color: var(--sky);
+    margin: 28px 0 14px;
+    padding-left: 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .explore-section-title.greek-title { color: #c090ff; }
+  .explore-section-title::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, currentColor, transparent);
+    opacity: 0.3;
+  }
+
+  /* ===== QUIZ SELECTOR ===== */
+  .quiz-selector {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .quiz-type-btn {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: var(--silver);
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quiz-type-btn.active, .quiz-type-btn:hover {
+    border-color: var(--gold); color: var(--gold);
+    background: rgba(244,196,48,0.08);
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+  ::-webkit-scrollbar-thumb { background: rgba(244,196,48,0.3); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<header>
+  <div class="title-wrap">
+    <h1>Sitara's Mythology World</h1>
+    <div class="subtitle">Tales of Gods & Heroes</div>
+    <div class="title-decoration">
+      <div class="line"></div>
+      <span>⚡</span>
+      <span>🪬</span>
+      <span>⚡</span>
+      <div class="line"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSection('stories')">📖 Stories</button>
+  <button class="nav-btn" onclick="showSection('explore')">🗺️ Explore</button>
+  <button class="nav-btn" onclick="showSection('quiz')">⚡ Quiz Time</button>
+</nav>
+
+<main>
+  <!-- STORIES -->
+  <section id="stories" class="section active">
+    <div class="section-header">
+      <h2>Epic Tales</h2>
+      <p>Pick a story and journey into the age of gods and legends</p>
+    </div>
+    <div class="story-grid" id="story-grid"></div>
+  </section>
+
+  <!-- EXPLORE -->
+  <section id="explore" class="section">
+    <div class="section-header">
+      <h2>Meet the Gods</h2>
+      <p>Tap on a god or goddess to discover their secrets!</p>
+    </div>
+
+    <div class="explore-section-title">⚡ Norse Gods</div>
+    <div class="explore-grid" id="norse-deities"></div>
+
+    <div class="explore-section-title greek-title">🏛️ Greek Gods</div>
+    <div class="explore-grid" id="greek-deities"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="section">
+    <div class="section-header">
+      <h2>Challenge Your Knowledge!</h2>
+      <p>How well do you know your myths?</p>
+    </div>
+    <div class="quiz-selector">
+      <button class="quiz-type-btn active" onclick="startQuiz('all', this)">All Myths</button>
+      <button class="quiz-type-btn" onclick="startQuiz('norse', this)">Norse Only</button>
+      <button class="quiz-type-btn" onclick="startQuiz('greek', this)">Greek Only</button>
+    </div>
+    <div class="quiz-container">
+      <div id="quiz-content"></div>
+    </div>
+  </section>
+</main>
+
+<!-- Story Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const stories = [
+  {
+    id: 1, type: 'norse', badge: 'NORSE MYTH',
+    emoji: '⚡',
+    title: 'Thor & the Stolen Hammer',
+    teaser: 'The mighty hammer Mjölnir goes missing — and the thunder god must go undercover to get it back!',
+    body: `<div class="story-emoji">⚡🔨</div>
+    <p>One morning, <span class="highlight">Thor</span>, the mighty god of thunder, woke up to find his beloved hammer <span class="highlight">Mjölnir</span> completely gone! Without it, he couldn't protect the nine worlds from giants and monsters. He was furious — and very worried.</p>
+    <p>The mischievous god <span class="highlight">Loki</span> flew with borrowed wings to the land of the giants to investigate. He discovered that a powerful frost giant named <span class="highlight">Thrym</span> had stolen the hammer and buried it deep underground. Thrym's ransom? He wanted the goddess <span class="highlight">Freya</span> as his bride!</p>
+    <p>The goddess Freya was so angry at this idea that the walls shook and her golden necklace shattered. There had to be another way. Loki had a brilliant — and very silly — idea.</p>
+    <p><em>"Thor must dress as a bride,"</em> Loki said with a grin. <em>"We'll disguise you as Freya and go to the giant's hall ourselves!"</em></p>
+    <p>Grumbling mightily, the great thunder god put on a bridal dress, a veil, and a necklace. Loki dressed as a bridesmaid, and off they went to <span class="highlight">Jötunheim</span>, the land of giants.</p>
+    <p>At the feast, Thrym watched in amazement as his "bride" ate an entire ox, eight salmon, and three barrels of mead! Loki quickly explained: <em>"She was so excited for this wedding, she hasn't eaten in eight days!"</em></p>
+    <p>When Thrym brought out Mjölnir to bless the marriage — exactly what Thor had been waiting for — Thor ripped off his veil, grabbed the hammer, and with a mighty <span class="highlight">BOOM</span> defeated every giant in the hall. The nine worlds were safe once more!</p>
+    <p>And yes — the gods laughed about Thor's bridal outfit for many, many centuries. ⚡</p>`,
+  },
+  {
+    id: 2, type: 'norse', badge: 'NORSE MYTH',
+    emoji: '🐺',
+    title: 'How Odin Lost His Eye',
+    teaser: 'The all-father makes the ultimate sacrifice to unlock the wisdom of the universe.',
+    body: `<div class="story-emoji">👁️🌳</div>
+    <p><span class="highlight">Odin</span>, king of the Norse gods, was the wisest of all — but he hungered for even greater wisdom. He had heard of a magical well at the roots of <span class="highlight">Yggdrasil</span>, the great World Tree, whose water contained all the knowledge in the universe.</p>
+    <p>This was the <span class="highlight">Well of Mimir</span>, guarded by the ancient and wise being Mimir. Anyone who drank from it would gain incredible wisdom — but nothing so precious comes free.</p>
+    <p>Odin traveled to the roots of Yggdrasil and knelt before the well. Its waters shimmered with deep blue light, reflecting stars that had never been seen in the sky.</p>
+    <p><em>"What is your price for a single drink?"</em> Odin asked.</p>
+    <p>Mimir looked up slowly. <em>"One of your eyes,"</em> he said simply.</p>
+    <p>Odin thought for a long time. Then, without hesitation, he removed one of his own eyes and dropped it into the well. It sank slowly, glimmering, to the bottom — where it remains to this day.</p>
+    <p>He cupped the water in his hands and drank. In one moment, <span class="highlight">all the secrets of the universe</span> rushed into his mind — the past, the future, the nature of all things. He saw every rune, every fate, every star.</p>
+    <p>This is why Odin is always shown with one eye — the other gazes forever upward from the bottom of the well, still watching, still learning. 👁️</p>
+    <p>It teaches us something important: <span class="highlight">true wisdom sometimes asks us to give something up</span>. And Odin never regretted his sacrifice for even a moment.</p>`,
+  },
+  {
+    id: 3, type: 'greek', badge: 'GREEK MYTH',
+    emoji: '🌻',
+    title: 'Persephone & the Seasons',
+    teaser: 'How a stolen princess explained why we have winter — and why flowers bloom every spring.',
+    body: `<div class="story-emoji">🌸❄️</div>
+    <p>Long ago, the earth was always warm and full of flowers — because <span class="highlight">Demeter</span>, goddess of the harvest, kept everything growing year-round. Her daughter <span class="highlight">Persephone</span> was the most beloved being on earth, with a laugh like bells and a love for every flower that bloomed.</p>
+    <p>One day, while Persephone was picking flowers in a meadow, the ground split open. <span class="highlight">Hades</span>, lord of the underworld, rose up in his dark chariot and whisked Persephone away to his realm beneath the earth.</p>
+    <p>Demeter searched and searched. She was so heartbroken that she forgot to make the crops grow. The trees went bare. The wheat withered. Humans shivered and starved. The whole world turned gray and cold.</p>
+    <p>Finally, <span class="highlight">Zeus</span> the sky king stepped in. He sent the messenger god <span class="highlight">Hermes</span> to bring Persephone home — but there was a catch. Anyone who eats food in the underworld must stay there forever.</p>
+    <p>Persephone had eaten <span class="highlight">six pomegranate seeds</span>. Just six. But it was enough.</p>
+    <p>A deal was made: Persephone would spend <em>six months</em> each year in the underworld with Hades, and <em>six months</em> on earth with her mother.</p>
+    <p>And so the seasons were born. When Persephone returns to earth each spring, <span class="highlight">Demeter is so happy</span> that flowers burst into bloom and crops spring up everywhere. When Persephone must return below, Demeter's sadness turns the world cold and bare again.</p>
+    <p>Every winter is a mother missing her daughter. Every spring is their joyful reunion. 🌸</p>`,
+  },
+  {
+    id: 4, type: 'greek', badge: 'GREEK MYTH',
+    emoji: '🏺',
+    title: 'Icarus & the Wings of Wax',
+    teaser: 'A boy flies too close to the sun — a timeless story about courage, pride, and listening to your dad.',
+    body: `<div class="story-emoji">🪶☀️</div>
+    <p>The great inventor <span class="highlight">Daedalus</span> was trapped on the island of Crete with his young son <span class="highlight">Icarus</span>. The cruel King Minos would not let them leave by sea — so Daedalus devised an extraordinary plan.</p>
+    <p>He spent weeks collecting feathers of every size, binding them together with thread and <span class="highlight">beeswax</span> into two magnificent pairs of wings — one for himself, one for his son.</p>
+    <p>Before they put the wings on, Daedalus knelt down and looked his son in the eyes. <em>"Listen carefully,"</em> he said. <em>"Do not fly too low — the sea spray will soak the feathers. And do not fly too high — the sun's heat will melt the wax. Stay in the middle. Fly near me."</em></p>
+    <p>Icarus nodded. He understood. But the moment he leaped from the cliff and felt the wind beneath him — the sheer, breathtaking <span class="highlight">joy of flight</span> — he forgot everything his father had said.</p>
+    <p>Up he soared, higher and higher, laughing with delight. He could see the whole sea below him like a blue cloth. He felt like he could touch the clouds, the stars, the <span class="highlight">sun itself</span>.</p>
+    <p>Then he felt it. A warmth on his back, then heat. One by one, the feathers began to fall. The wax dripped away in golden drops. And then — with a cry — Icarus fell, tumbling through the bright air, into the deep blue sea.</p>
+    <p>Daedalus circled above, calling out his son's name. But there was only the gentle lapping of the waves. He flew on alone, carrying the weight of his grief all the way to shore.</p>
+    <p>The lesson of Icarus is remembered to this day: <span class="highlight">bravery and ambition are wonderful things — but wisdom is knowing your limits</span>. 🪶</p>`,
+  },
+  {
+    id: 5, type: 'norse', badge: 'NORSE MYTH',
+    emoji: '🐍',
+    title: 'Loki\'s Terrible Children',
+    teaser: 'The trickster god has some very unusual children — including a world-encircling serpent!',
+    body: `<div class="story-emoji">🐍🐺🚢</div>
+    <p><span class="highlight">Loki</span>, the trickster god, was always causing trouble — but three of his children were so unusual that even the gods were afraid of them.</p>
+    <p>The first was <span class="highlight">Fenrir</span> — a wolf who started small enough to hold in your arms but grew and grew until he was larger than a mountain. The gods tried to bind him with magical chains, but he broke every chain they made. Finally, they asked the dwarves to craft a ribbon made of impossible things: the sound of a cat's footstep, the beard of a woman, the roots of a mountain, the sinews of a bear, the breath of a fish, and the spittle of a bird. This ribbon, called <span class="highlight">Gleipnir</span>, looked like silk but could never be broken. Even mighty Fenrir couldn't escape it — and he waits, bound, until the end of days.</p>
+    <p>The second was <span class="highlight">Jörmungandr</span> — the great Midgard Serpent. The gods threw the giant snake into the ocean surrounding the world, but it grew so large it could wrap itself around the entire earth and bite its own tail. Thor and this serpent are destined to fight at the end of the world — it's one of mythology's greatest battles. ⚡</p>
+    <p>The third was <span class="highlight">Hel</span> — a goddess with a face half-alive and half-dead, who ruled over the land where most humans went after they died. She was serious and fair, giving every soul exactly what they deserved.</p>
+    <p>Loki's children remind us that in Norse mythology, <span class="highlight">even the most fearsome things have a place</span> in the grand story of the universe. 🌊</p>`,
+  },
+  {
+    id: 6, type: 'greek', badge: 'GREEK MYTH',
+    emoji: '🌊',
+    title: 'Odysseus & the Cyclops',
+    teaser: 'The cleverest man in the world outwits a one-eyed giant using only his wits and a fake name.',
+    body: `<div class="story-emoji">🌊👁️</div>
+    <p>After the great Trojan War, the hero <span class="highlight">Odysseus</span> was trying to sail home to his family. But the sea god Poseidon was angry with him, and sent storm after storm to blow his ships off course.</p>
+    <p>One day, his crew landed on an island and entered a large cave to shelter. They found huge cheeses and pens of sheep and goats — clearly a giant's home. When the giant <span class="highlight">Polyphemus</span> returned, he was enormous, with only one eye in the middle of his forehead. He sealed the cave with a boulder so massive that twenty horses couldn't move it.</p>
+    <p>When Polyphemus discovered the men, he grabbed two and ate them for supper. Odysseus was terrified — but his mind was already working.</p>
+    <p>The next day, while the Cyclops was away with his flock, Odysseus found a huge wooden stake and sharpened it to a point. That evening, he offered Polyphemus some of the finest wine he had brought from his ships. The giant loved it so much he asked for more. <em>"What is your name?"</em> he asked drowsily.</p>
+    <p><em>"My name,"</em> said Odysseus carefully, <em>"is Nobody."</em></p>
+    <p>When Polyphemus fell into a deep sleep, Odysseus and his men drove the burning stake into the giant's eye. The Cyclops roared in agony. His neighbors came running and shouted: <em>"Who is hurting you?"</em></p>
+    <p><em>"Nobody! Nobody is hurting me!"</em> Polyphemus screamed — and the neighbors shrugged and went home, confused.</p>
+    <p>In the morning, Odysseus and his men escaped by hiding under the bellies of the giant's sheep as they were let out to graze. Odysseus waved from the boat — and then, just a little too proudly, shouted his real name back to the Cyclops.</p>
+    <p>That moment of pride cost him many more years at sea. But the story of <span class="highlight">"Nobody"</span> remains one of the cleverest tricks in all mythology. 🛶</p>`,
+  },
+];
+
+const deities = {
+  norse: [
+    { emoji: '⚡', name: 'Thor', domain: 'Thunder & Strength', fact: 'Thor\'s hammer Mjölnir was so powerful it could flatten mountains. But here\'s a secret: it had a slightly short handle because a fly bit the dwarf who was forging it! Thor also had two magical goats that pulled his chariot — and he could eat them for dinner and bring them back to life the next morning.' },
+    { emoji: '🦅', name: 'Odin', domain: 'Wisdom & War', fact: 'Odin has two ravens named Huginn (Thought) and Muninn (Memory) who fly all over the nine worlds and whisper what they see into his ear. He also rides an eight-legged horse called Sleipnir — the fastest horse that ever existed!' },
+    { emoji: '🔥', name: 'Loki', domain: 'Trickery & Change', fact: 'Loki could shape-shift into any animal! He once turned into a salmon to hide, became a fly to cause mischief, and even became a mare (female horse) for a whole season. He is the most unpredictable character in all of Norse mythology.' },
+    { emoji: '🌈', name: 'Freya', domain: 'Love & Magic', fact: 'Freya travels in a chariot pulled by two giant cats! She also has a magical cloak made of falcon feathers that lets anyone who wears it transform into a falcon and fly. Half of all warriors who die in battle are chosen by Freya herself.' },
+    { emoji: '🌊', name: 'Tyr', domain: 'Justice & Honor', fact: 'Tyr is so brave he put his hand in the mouth of the giant wolf Fenrir as a promise that the wolf would be released — knowing the wolf would bite it off when he discovered the trick. Tyr lost his hand, but his courage was remembered forever.' },
+    { emoji: '🎵', name: 'Bragi', domain: 'Poetry & Music', fact: 'Bragi is the god of poetry and has runes — magical symbols — carved on his tongue to give him the gift of words. Whenever a great hero arrived in Valhalla, Odin\'s hall for brave warriors, Bragi would greet them with a song.' },
+  ],
+  greek: [
+    { emoji: '⚡', name: 'Zeus', domain: 'Sky & Thunder', fact: 'Zeus could hurl lightning bolts, but he didn\'t make them himself — they were forged by the Cyclopes in the fires of the volcano beneath Mount Etna! His symbol was the eagle, and he could transform into almost any animal or person.' },
+    { emoji: '🌊', name: 'Poseidon', domain: 'Sea & Earthquakes', fact: 'Poseidon was so powerful that when he struck the ground with his trident, it caused earthquakes! He competed with Athena to become the patron god of Athens — he offered a saltwater spring, she offered an olive tree. The people chose the olive tree, and Athena won.' },
+    { emoji: '🦉', name: 'Athena', domain: 'Wisdom & Battle', fact: 'Athena burst fully-grown and fully-armored from Zeus\'s forehead with a tremendous shout that shook the sky! Her sacred animal was the owl because owls can see in the dark — just like wisdom helps you see through confusion.' },
+    { emoji: '☀️', name: 'Apollo', domain: 'Sun & Music', fact: 'Apollo drove a golden chariot pulled by four golden horses across the sky each day, which the Greeks believed was how the sun moved! He was also the god of music, poetry, and medicine, and could see the future.' },
+    { emoji: '🌙', name: 'Artemis', domain: 'Moon & Hunting', fact: 'Artemis was Apollo\'s twin sister and the goddess of the moon. She was an incredible archer who could shoot a silver arrow completely silently. She loved animals and forests, and a deer and a silver bow are her symbols.' },
+    { emoji: '🔥', name: 'Hephaestus', domain: 'Fire & Crafting', fact: 'Hephaestus was the only Olympian who worked with his hands. He built Hermes\'s winged sandals, Achilles\'s golden armor, and even golden robot servants who helped him in his forge! He was a genius inventor thousands of years before machines existed.' },
+  ]
+};
+
+const allQuestions = [
+  { q: 'Which god is known as the ruler of the Norse gods?', emoji: '🦅', opts: ['Thor', 'Loki', 'Odin', 'Freya'], ans: 2, type: 'norse', explain: 'Odin is the Allfather — the king of Asgard and the Norse gods!' },
+  { q: 'What is the name of Thor\'s magical hammer?', emoji: '🔨', opts: ['Gungnir', 'Mjölnir', 'Gleipnir', 'Excalibur'], ans: 1, type: 'norse', explain: 'Mjölnir was forged by dwarves and could flatten mountains with one blow!' },
+  { q: 'Who is the Greek god of the sea?', emoji: '🌊', opts: ['Zeus', 'Ares', 'Hermes', 'Poseidon'], ans: 3, type: 'greek', explain: 'Poseidon ruled the oceans and could cause earthquakes with his trident!' },
+  { q: 'What did Odin sacrifice to gain wisdom?', emoji: '👁️', opts: ['His hammer', 'One of his eyes', 'His ravens', 'His throne'], ans: 1, type: 'norse', explain: 'Odin gave up one eye to drink from the Well of Mimir and gain all knowledge!' },
+  { q: 'Which goddess burst fully-grown from Zeus\'s head?', emoji: '🦉', opts: ['Aphrodite', 'Hera', 'Athena', 'Artemis'], ans: 2, type: 'greek', explain: 'Athena sprang from Zeus\'s forehead in full armor, shouting a battle cry!' },
+  { q: 'In the story of Persephone, how many pomegranate seeds did she eat?', emoji: '🌸', opts: ['Three', 'Six', 'One', 'Twelve'], ans: 1, type: 'greek', explain: 'She ate 6 seeds — so she must spend 6 months underground, creating winter!' },
+  { q: 'What fake name did Odysseus tell the Cyclops?', emoji: '👁️', opts: ['Hero', 'Stranger', 'Nobody', 'Someone'], ans: 2, type: 'greek', explain: 'Clever Odysseus said his name was "Nobody" so the Cyclops couldn\'t get help!' },
+  { q: 'What material was used to make Icarus\'s wings?', emoji: '🪶', opts: ['Silk & gold', 'Feathers & wax', 'Feathers & glue', 'Cloth & iron'], ans: 1, type: 'greek', explain: 'Daedalus bound feathers together with beeswax — which melted near the sun!' },
+  { q: 'What are Odin\'s two ravens named?', emoji: '🦅', opts: ['Storm & Shadow', 'Huginn & Muninn', 'Night & Day', 'Fire & Ice'], ans: 1, type: 'norse', explain: 'Huginn means "Thought" and Muninn means "Memory" — they report all they see to Odin!' },
+  { q: 'Who is Freya\'s sacred animal that pulls her chariot?', emoji: '🐱', opts: ['Wolves', 'Ravens', 'Cats', 'Horses'], ans: 2, type: 'norse', explain: 'Freya\'s chariot is pulled by two giant cats! She\'s also associated with falcons.' },
+  { q: 'Which god forged weapons for the Greek gods?', emoji: '🔥', opts: ['Ares', 'Apollo', 'Hermes', 'Hephaestus'], ans: 3, type: 'greek', explain: 'Hephaestus was the divine craftsman — he made Hermes\'s sandals and Achilles\'s armor!' },
+  { q: 'What is Yggdrasil?', emoji: '🌳', opts: ['Odin\'s sword', 'The great World Tree', 'Thor\'s home', 'A magical river'], ans: 1, type: 'norse', explain: 'Yggdrasil is the great ash tree that connects all nine Norse worlds together!' },
+  { q: 'Who is the twin sibling of Apollo?', emoji: '🌙', opts: ['Athena', 'Hera', 'Artemis', 'Aphrodite'], ans: 2, type: 'greek', explain: 'Artemis is Apollo\'s twin! She\'s the goddess of the moon and hunting.' },
+  { q: 'What special object did Loki\'s trickery once cost the gods?', emoji: '🌈', opts: ['The sun and moon', 'Odin\'s ravens', 'Thor\'s chariot', 'Mjölnir'], ans: 0, type: 'norse', explain: 'In one tale, Loki\'s tricks put the sun, moon, and even the goddess Freya at risk!' },
+  { q: 'What is Poseidon\'s weapon?', emoji: '🌊', opts: ['A lightning bolt', 'A trident', 'A hammer', 'A bow and arrow'], ans: 1, type: 'greek', explain: 'Poseidon\'s trident could stir up storms, cause earthquakes, and split rocks!' },
+];
+
+// ===== RENDER STORIES =====
+function renderStories() {
+  const grid = document.getElementById('story-grid');
+  grid.innerHTML = stories.map(s => `
+    <div class="story-card ${s.type}" onclick="openStory(${s.id})">
+      <span class="card-badge">${s.badge}</span>
+      <span class="emoji">${s.emoji}</span>
+      <h3>${s.title}</h3>
+      <p>${s.teaser}</p>
+      <button class="read-btn">READ STORY →</button>
+    </div>
+  `).join('');
+}
+
+function openStory(id) {
+  const s = stories.find(x => x.id === id);
+  document.getElementById('modal-content').innerHTML = `
+    <span class="card-badge" style="margin-bottom:12px;display:inline-block;${s.type==='norse'?'background:rgba(74,144,196,0.25);color:#7eb8e8;border:1px solid rgba(74,144,196,0.4)':'background:rgba(200,150,255,0.2);color:#d4a0ff;border:1px solid rgba(200,150,255,0.4)'}">${s.badge}</span>
+    <h2>${s.title}</h2>
+    <div class="story-type">A tale from the age of gods and heroes</div>
+    <div class="story-body">${s.body}</div>
+  `;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ===== RENDER DEITIES =====
+function renderDeities() {
+  ['norse','greek'].forEach(type => {
+    const el = document.getElementById(`${type}-deities`);
+    el.innerHTML = deities[type].map((d,i) => `
+      <div class="deity-card ${type}-card" onclick="toggleDeity(this)">
+        <span class="deity-emoji">${d.emoji}</span>
+        <h3>${d.name}</h3>
+        <div class="domain">${d.domain}</div>
+        <div class="fun-fact">✨ <strong>Did you know?</strong> ${d.fact}</div>
+        <div class="tap-hint">TAP TO DISCOVER</div>
+      </div>
+    `).join('');
+  });
+}
+
+function toggleDeity(el) {
+  el.classList.toggle('expanded');
+  const hint = el.querySelector('.tap-hint');
+  hint.textContent = el.classList.contains('expanded') ? 'TAP TO CLOSE' : 'TAP TO DISCOVER';
+}
+
+// ===== QUIZ =====
+let quizQuestions = [];
+let quizIdx = 0;
+let quizScore = 0;
+let answered = false;
+let currentType = 'all';
+
+function startQuiz(type, btnEl) {
+  currentType = type;
+  document.querySelectorAll('.quiz-type-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  const pool = type === 'all' ? allQuestions : allQuestions.filter(q => q.type === type);
+  quizQuestions = shuffle([...pool]).slice(0, 8);
+  quizIdx = 0;
+  quizScore = 0;
+  answered = false;
+  renderQuestion();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function renderQuestion() {
+  if (quizIdx >= quizQuestions.length) { renderResult(); return; }
+  const q = quizQuestions[quizIdx];
+  const pct = (quizIdx / quizQuestions.length) * 100;
+  document.getElementById('quiz-content').innerHTML = `
+    <div class="quiz-progress">
+      <span class="q-num">Q ${quizIdx+1} / ${quizQuestions.length}</span>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <span class="score-display">⭐ ${quizScore}</span>
+    </div>
+    <div class="quiz-emoji">${q.emoji}</div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="options-grid">
+      ${q.opts.map((o,i) => `<button class="option-btn" onclick="selectAnswer(${i})">${o}</button>`).join('')}
+    </div>
+    <div class="feedback-msg" id="feedback"></div>
+    <div class="quiz-nav">
+      <button class="btn-primary" id="next-btn" onclick="nextQuestion()" disabled>NEXT →</button>
+    </div>
+  `;
+  answered = false;
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = quizQuestions[quizIdx];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((b,i) => {
+    b.disabled = true;
+    if (i === q.ans) b.classList.add('correct');
+    if (i === idx && i !== q.ans) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('feedback');
+  if (idx === q.ans) {
+    quizScore++;
+    fb.textContent = '✨ Correct! ' + q.explain;
+    fb.style.color = '#7ee787';
+  } else {
+    fb.textContent = '💡 ' + q.explain;
+    fb.style.color = '#ffa07a';
+  }
+  document.getElementById('next-btn').disabled = false;
+}
+
+function nextQuestion() {
+  quizIdx++;
+  renderQuestion();
+}
+
+function renderResult() {
+  const pct = Math.round((quizScore / quizQuestions.length) * 100);
+  let emoji, msg;
+  if (pct >= 90) { emoji = '🏆'; msg = 'You are a true Myth Master! The gods themselves would be impressed!'; }
+  else if (pct >= 70) { emoji = '⭐'; msg = 'Excellent! You know your myths really well!'; }
+  else if (pct >= 50) { emoji = '📖'; msg = 'Good effort! A few more stories and you\'ll be unstoppable!'; }
+  else { emoji = '🌱'; msg = 'Keep exploring the stories — you\'re just getting started on your mythic journey!'; }
+
+  document.getElementById('quiz-content').innerHTML = `
+    <div class="quiz-result">
+      <div class="result-emoji">${emoji}</div>
+      <h3>Quest Complete!</h3>
+      <div class="final-score">${quizScore} / ${quizQuestions.length}</div>
+      <p>${msg}</p>
+      <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-primary" onclick="startQuiz('${currentType}', null)">PLAY AGAIN ↺</button>
+        <button class="btn-secondary" onclick="showSection('stories')">READ STORIES 📖</button>
+      </div>
+    </div>
+  `;
+}
+
+// ===== NAV =====
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'quiz') startQuiz(currentType, document.querySelector('.quiz-type-btn.active'));
+}
+
+// ===== INIT =====
+renderStories();
+renderDeities();
+startQuiz('all', null);
+</script>
+</body>
+</html>
